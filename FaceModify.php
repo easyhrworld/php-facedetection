@@ -1,10 +1,11 @@
 <?php
 
+/* We now extend the above class so we can add our own methods */
+namespace svay;
+
 include "FaceDetector.php";
 
-/* We now extend the above class so we can add our own methods */
-
-class FaceModify extends \svay\FaceDetector
+class FaceModify extends FaceDetector
 {
 
     public function Rotate()
