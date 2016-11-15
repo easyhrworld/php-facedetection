@@ -354,39 +354,46 @@ class FaceDetector
         return true;
     }
 
-    public function Rotate()
+    public function Rotate($outFileName)
     {
         $canvas = imagecreatetruecolor($this->face['w'], $this->face['w']);
         imagecopy($canvas, $this->canvas, 0, 0, $this->face['x'],
             $this->face['x'], $this->face['w'], $this->face['w']);
         $canvas = imagerotate($canvas, 180, 0);
 
-        return $canvas;
+        $this->_outImage($canvas, $outFileName);
     }
 
-    public function toGrayScale()
+    public function toGrayScale($outFileName)
     {
         $canvas = imagecreatetruecolor($this->face['w'], $this->face['w']);
         imagecopy($canvas, $this->canvas, 0, 0, $this->face['x'],
             $this->face['x'], $this->face['w'], $this->face['w']);
         imagefilter($canvas, IMG_FILTER_GRAYSCALE);
 
-        return $canvas;
+        $this->_outImage($canvas, $outFileName);
     }
 
-    public function resizeFace($width, $height)
+    public function resizeFace($width, $height, $outFileName)
     {
         $canvas = imagecreatetruecolor($width, $width);
         imagecopyresized($canvas, $this->canvas, 0, 0, $this->face['x'],
             $this->face['y'], $width, $height,
             $this->face['w'], $this->face['w']);
 
-        return $canvas;
+        $this->_outImage($canvas, $outFileName);
     }
 
-    private function _outImage($canvas)
+    private function _outImage($canvas, $outFileName)
     {
-        header('Content-type: image/jpeg');
-        imagejpeg($canvas);
+        if (empty($this->face)) {
+            throw new NoFaceException('No face detected');
+        }
+
+        if ($outFileName === null) {
+            header('Content-type: image/jpeg');
+        }
+
+        imagejpeg($canvas, $outFileName);
     }
 }
