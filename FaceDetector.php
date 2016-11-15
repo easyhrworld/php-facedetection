@@ -360,7 +360,8 @@ class FaceDetector
         imagecopy($canvas, $this->canvas, 0, 0, $this->face['x'],
             $this->face['x'], $this->face['w'], $this->face['w']);
         $canvas = imagerotate($canvas, 180, 0);
-        $this->_outImage($canvas);
+
+        return $canvas;
     }
 
     public function toGrayScale()
@@ -369,7 +370,8 @@ class FaceDetector
         imagecopy($canvas, $this->canvas, 0, 0, $this->face['x'],
             $this->face['x'], $this->face['w'], $this->face['w']);
         imagefilter($canvas, IMG_FILTER_GRAYSCALE);
-        $this->_outImage($canvas);
+
+        return $canvas;
     }
 
     public function resizeFace($width, $height)
@@ -378,7 +380,8 @@ class FaceDetector
         imagecopyresized($canvas, $this->canvas, 0, 0, $this->face['x'],
             $this->face['y'], $width, $height,
             $this->face['w'], $this->face['w']);
-        $this->_outImage($canvas);
+
+        return $canvas;
     }
 
     private function _outImage($canvas)
