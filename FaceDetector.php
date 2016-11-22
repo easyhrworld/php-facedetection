@@ -413,6 +413,8 @@ class FaceDetector
             $stats['height']
         );
 
+        log_message("error", json_encode($image));
+
         imagecopyresized($canvas, $original, 0, 0, $image['x'],
             $image['y'], $width, $height,
             $image['w'], $image['w']);
