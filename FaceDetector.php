@@ -396,4 +396,28 @@ class FaceDetector
 
         imagejpeg($canvas, $outFileName);
     }
+
+    public function resize($file, $outFileName, $width, $height)
+    {
+        $original = imagecreatefromjpeg($file);
+        $canvas = imagecreatetruecolor($width, $width);
+        $stats = $this->getImgStats($canvas);
+
+        $image = $this->doDetectGreedyBigToSmall(
+            $stats['ii'],
+            $stats['ii2'],
+            $stats['width'],
+            $stats['height']
+        );
+
+        imagecopyresized($canvas, $original, 0, 0, $image['x'],
+            $image['y'], $width, $height,
+            $image['w'], $image['w']);
+
+        if ($outFileName === null) {
+            header('Content-type: image/jpeg');
+        }
+
+        imagejpeg($canvas, $outFileName);
+    }
 }
