@@ -399,7 +399,7 @@ class FaceDetector
 
     public function resize($file, $outFileName, $width, $height)
     {
-        $original = imagecreatefromstring($file);
+        $original = imagecreatefromjpeg($file);
         $canvas = imagecreatetruecolor($width, $height);
         $stats = $this->getImgStats($canvas);
 
