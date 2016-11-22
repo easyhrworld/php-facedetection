@@ -376,7 +376,7 @@ class FaceDetector
 
     public function resizeFace($width, $height, $outFileName)
     {
-        $canvas = imagecreatetruecolor($width, $width);
+        $canvas = imagecreatetruecolor($width, $height);
         imagecopyresized($canvas, $this->canvas, 0, 0, $this->face['x'],
             $this->face['y'], $width, $height,
             $this->face['w'], $this->face['w']);
@@ -399,8 +399,8 @@ class FaceDetector
 
     public function resize($file, $outFileName, $width, $height)
     {
-        $original = imagecreatefromjpeg($file);
-        $canvas = imagecreatetruecolor($width, $width);
+        $original = imagecreatefromstring($file);
+        $canvas = imagecreatetruecolor($width, $height);
         $stats = $this->getImgStats($canvas);
 
         $image = $this->doDetectGreedyBigToSmall(
