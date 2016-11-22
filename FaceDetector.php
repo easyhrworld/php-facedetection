@@ -397,27 +397,16 @@ class FaceDetector
         imagejpeg($canvas, $outFileName);
     }
 
-    public function resize($file, $outFileName, $width, $height)
+    public function resize($file, $outFileName, $d_width, $d_height)
     {
         $original = imagecreatefromstring(file_get_contents($file, false, null));
+        list($o_width, $o_height) = getimagesize($file);
 
-        $canvas = imagecreatetruecolor($width, $height);
-        $stats = $this->getImgStats($canvas);
+        $canvas = imagecreatetruecolor($d_width, $d_height);
 
-        log_message("error", json_encode($stats));
-
-        $image = $this->doDetectGreedyBigToSmall(
-            $stats['ii'],
-            $stats['ii2'],
-            $stats['width'],
-            $stats['height']
-        );
-
-        log_message("error", json_encode($image));
-
-        imagecopyresized($canvas, $original, 0, 0, $image['x'],
-            $image['y'], $width, $height,
-            $image['w'], $image['w']);
+        imagecopyresized($canvas, $original, 0, 0, 0,
+            0, $d_width, $d_height,
+            $o_width, $o_height);
 
         if ($outFileName === null) {
             header('Content-type: image/jpeg');
