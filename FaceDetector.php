@@ -399,16 +399,8 @@ class FaceDetector
 
     public function resize($file, $outFileName, $width, $height)
     {
-        $original = "";
-        if (is_resource($file)) {
-            $orginal = $file;
-        } elseif (is_file($file)) {
-            $orginal = imagecreatefromjpeg($file);
-        } elseif (is_string($file)) {
-            $orginal = imagecreatefromstring($file);
-        } else {
-            throw new Exception("Can not load $file");
-        }
+        $original = imagecreatefromstring(file_get_contents($file, false, null));
+
         $canvas = imagecreatetruecolor($width, $height);
         $stats = $this->getImgStats($canvas);
 
