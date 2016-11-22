@@ -404,6 +404,8 @@ class FaceDetector
         $canvas = imagecreatetruecolor($width, $height);
         $stats = $this->getImgStats($canvas);
 
+        log_message("error", json_encode($stats));
+
         $image = $this->doDetectGreedyBigToSmall(
             $stats['ii'],
             $stats['ii2'],
